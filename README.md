@@ -82,7 +82,8 @@ The project follows a modular PLC programming approach using function blocks, gl
 
 ### CODESYS Device Structure
 
-![CODESYS Project Structure](screenshots/Screenshot%202025-11-15%20112314%281%29.png)
+<h3>CODESYS Project Structure</h3>
+<img src="screenshots/Screenshot%202025-11-15%20112314%281%29.png" alt="Project Structure" width="450">
 
 The project contains:
 
@@ -101,7 +102,8 @@ The project contains:
 
 The Human Machine Interface provides a visual representation of the industrial oven's operating conditions.
 
-![Industrial Oven HMI](screenshots/Screenshot%202025-11-15%20112446.png)
+<h3>Industrial Oven HMI</h3>
+<img src="screenshots/Screenshot%202025-11-15%20112446.png" alt="Industrial Oven HMI" width="900">
 
 ### HMI Components
 
@@ -126,7 +128,8 @@ The PLC control system is developed using Structured Text (ST).
 
 ### 1. Main Program — PLC_PRG
 
-![PLC Main Program](screenshots/Screenshot%202025-11-15%20112741.png)
+<h3>Main PLC Program</h3>
+<img src="screenshots/Screenshot%202025-11-15%20112741.png" alt="PLC_PRG" width="900">
 
 The main PLC program initializes and executes three function blocks:
 
@@ -138,7 +141,8 @@ These function blocks are executed during the PLC scan cycle to manage the simul
 
 ### 2. Global Variable List — GVL_Oven
 
-![Global Variables](screenshots/Screenshot%202025-11-15%20112818.png)
+<h3>Global Variable List</h3>
+<img src="screenshots/Screenshot%202025-11-15%20112818.png" alt="GVL_Oven" width="900">
 
 The Global Variable List stores the shared variables used by the control system, including:
 
@@ -156,7 +160,8 @@ The variables allow the PLC program, function blocks, and HMI to communicate.
 
 ### 3. Process Control — FB_ProcessControl
 
-![Process Control Function Block](screenshots/Screenshot%202025-11-15%20112851.png)
+<h3>Process Control Function Block</h3>
+<img src="screenshots/Screenshot%202025-11-15%20112851.png" alt="FB_ProcessControl" width="900">
 
 This function block manages the oven operating sequence using a state machine.
 
@@ -172,7 +177,8 @@ The function block also controls heating commands and status indicators.
 
 ### 4. Safety Logic — FB_SafetyLogic
 
-![Safety Logic Function Block](screenshots/Screenshot%202025-11-15%20112908.png)
+<h3>Safety Logic Function Block</h3>
+<img src="screenshots/Screenshot%202025-11-15%20112908.png" alt="FB_SafetyLogic" width="900">
 
 This function block monitors temperature conditions to protect the oven and processed fixtures.
 
@@ -190,7 +196,8 @@ The critical shutdown threshold is **160°F**, which is 10°F above the configur
 
 ### 5. Temperature Simulation — FB_TemperatureSimulation
 
-![Temperature Simulation Function Block](screenshots/Screenshot%202025-11-15%20112921.png)
+<h3>Temperature Simulation Function Block</h3>
+<img src="screenshots/Screenshot%202025-11-15%20112921.png" alt="FB_TemperatureSimulation" width="900">
 
 This function block simulates oven temperature changes without requiring a physical temperature sensor or heating element.
 
