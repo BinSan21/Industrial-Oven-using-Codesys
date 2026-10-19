@@ -83,7 +83,8 @@ The project follows a modular PLC programming approach using function blocks, gl
 ### CODESYS Device Structure
 
 <h3>CODESYS Project Structure</h3>
-<img src="screenshots/Screenshot%202025-11-15%20112314%281%29.png" alt="Project Structure" width="450">
+<img width="379" height="769" alt="Screenshot 2025-11-15 112314" src="https://github.com/user-attachments/assets/0c590eaa-052e-4420-95da-d379361d33e8" />
+
 
 The project contains:
 
