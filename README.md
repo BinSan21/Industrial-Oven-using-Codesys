@@ -1,108 +1,313 @@
-# Industrial Oven Control System — CODESYS Simulation
 
-A **PLC-based industrial oven simulation** developed using **CODESYS V3.5 SP21 Patch 3**. The project models the temperature control and safety behavior of a drying oven used for metal fixtures after washing, including fixtures fitted with heat-sensitive rubber O-rings.
+# Industrial Oven Control System Using CODESYS
 
-This is a **software simulation only**. No physical PLC, heater, door lock, or temperature sensor is required.
+### PLC-Based Industrial Oven Simulation with HMI Visualization
 
-## Project Overview
+An Industrial Oven Control System developed using **CODESYS V3.5 SP21 Patch 3**. This project simulates an industrial drying oven using Programmable Logic Controller (PLC) programming in Structured Text (ST).
 
-The operator sets a target oven temperature and uses an HMI to monitor the heating process. The control program simulates temperature changes, manages the oven's operating states, displays status indicators, and responds to overtemperature conditions. The design emphasizes protecting the fixtures and their rubber O-rings from excessive heat.
+The system is designed to control and monitor oven temperature, manage heating and cooling, provide visual status indicators, and implement safety mechanisms to prevent overheating.
 
-**Development environment:** CODESYS V3.5 SP21 Patch 3  
-**Programming language:** Structured Text (ST)  
-**Target device shown in the project:** CODESYS Control Win V3 x64  
-**Interface:** CODESYS Visualization (HMI)
-
-## Features
-
-- **Adjustable temperature setpoint:** Enter the target temperature in degrees Fahrenheit (°F) using the HMI spinner/input.
-- **Simulated heating and cooling:** The displayed temperature increases when heating is commanded and cools toward the simulated ambient temperature when heating is off.
-- **Temperature gauge:** A meter shows the simulated current oven temperature.
-- **Power control:** An HMI rocker switch controls the simulated oven's power command.
-- **Status indicators:** LEDs show power, temperature ramp-up, target temperature reached, door lock, and safe-to-open conditions.
-- **Process sequencing:** A state-based process controller manages oven operation, including ramp-up, at-temperature operation, a dwell timer, and cooling.
-- **Alarm monitoring:** The HMI includes an alarm table and an alarm acknowledgment control.
-- **High-temperature protection:** An alarm is triggered if the simulated temperature exceeds the configured O-ring temperature limit.
-- **Automatic safety trip:** If the temperature rises more than **10°F above the O-ring limit**, the safety logic trips and turns off the simulated oven power command.
-
-## Project Structure
-
-| CODESYS component | Purpose |
-| --- | --- |
-| `PLC_PRG` | Main program that invokes the function blocks. |
-| `GVL_Oven` | Global variables for operator inputs, simulated temperature, indicators, and safety states. |
-| `FB_ProcessControl` | Manages operating states, heating commands, and process timing. |
-| `FB_SafetyLogic` | Handles overtemperature alarms, shutdown trips, and related safety logic. |
-| `FB_TemperatureSimulation` | Simulates heating and cooling based on the heating command. |
-| `Visu_Oven` | Operator HMI with controls, gauge, indicators, and alarm table. |
-| Alarm Configuration | Configures the alarm system used by the visualization. |
-
-The project also contains task configuration and visualization management objects.
-
-## HMI Overview
-
-The visualization provides:
-
-1. A **rocker switch** and power-status indicator.
-2. A **temperature setpoint spinner/input**.
-3. A **gauge** displaying the current simulated temperature.
-4. **LED indicators** for ramp-up, at-temperature, locked-door, and safe-to-open status.
-5. An **alarm table** and **alarm acknowledgment** control.
-
-## Temperature and Safety Logic
-
-The documented simulation uses the following example values:
-
-| Parameter | Documented value |
-| --- | --- |
-| Simulated ambient temperature | 75°F |
-| O-ring temperature limit | 150°F |
-| High-temperature alarm condition | Temperature above 150°F |
-| Critical shutdown condition | Temperature above 160°F (10°F beyond the limit) |
-
-The values above describe the documented example configuration, not universal safe temperatures for real O-rings. Actual O-ring limits depend on material specifications.
-
-**Important:** The shutdown in this project switches off the *simulated oven control output*; it does not physically disconnect a heater or stop an industrial PLC. A real industrial oven would require independently engineered and validated safety controls.
-
-## How to Open and Run the Simulation
-
-1. Download the `Industrial_oven.project` file from this repository.
-2. Open it using **CODESYS V3.5 SP21 Patch 3**.
-3. Allow CODESYS to resolve any required device or library dependencies, if prompted.
-4. Select **Build → Build** and check for build errors.
-5. Use **Online → Simulation** for CODESYS simulation mode, or connect to an appropriately installed and configured **CODESYS Control Win V3 x64** runtime.
-6. Select **Online → Login**, then start the application.
-7. Open **`Visu_Oven`** to view and operate the simulated HMI.
-8. Set the target temperature, turn the oven on, and observe the gauge, status indicators, and alarms.
-
-Menu wording and runtime setup may vary slightly depending on installed CODESYS components. You do **not** need to connect a physical PLC.
-
-## Suggested Verification Scenarios
-
-| Scenario | Expected simulation behavior |
-| --- | --- |
-| Power switched on with a valid setpoint | Simulated temperature ramps toward the target; ramp-up indicator activates. |
-| Target temperature reached | At-temperature indication activates and the process follows its configured timed sequence. |
-| Heating switched off | Simulated oven temperature cools toward ambient. |
-| Temperature exceeds O-ring limit | High-temperature alarm becomes active. |
-| Temperature exceeds the limit by more than 10°F | Safety trip disables the simulated oven power command. |
-| Oven has cooled sufficiently | Safe-to-open status is indicated according to the configured logic. |
-| Alarm is acknowledged | The configured acknowledgment logic responds, subject to the underlying alarm condition. |
-
-The project documentation includes screenshots of the HMI, PLC logic, flowchart, and application testing.
-
-## Limitations
-
-- The oven, heater, temperature measurement, and door status are **simulated**, not connected to physical equipment.
-- Temperature changes are generated by software logic and do not represent a calibrated thermal model.
-- This project is intended for **education and demonstration**, not for direct industrial deployment.
-
-## Academic Context
-
-Developed as a final project for **BCA153 — Computer Applications in the Industry**, Department of Computer Applications, College of Computer Studies, **Mindanao State University – Iligan Institute of Technology (MSU-IIT)**.
-
-**Project members:** Binyusoph P. Sansarona and KJ C. Villanueva.
+This project is **simulation-based only** and does not require physical PLC hardware.
 
 ---
 
-*Industrial Oven Control System — PLC programming and HMI simulation using CODESYS.*
+## Project Overview
+
+Industrial drying ovens are commonly used in manufacturing industries to remove moisture from metal fixtures after washing. However, some fixtures contain rubber O-rings that may be damaged when exposed to excessive temperatures.
+
+This project demonstrates a simulated industrial oven capable of operating at user-defined temperatures while monitoring safety conditions.
+
+The system includes an HMI where operators can set the desired temperature, monitor the simulated oven temperature, control oven power, and observe operating conditions through LED indicators.
+
+The PLC program incorporates temperature simulation, process control, door-locking logic, alarm monitoring, and automatic shutdown protection.
+
+---
+
+## Development Environment
+
+| Component | Description |
+|-----------|-------------|
+| Software | CODESYS V3.5 SP21 Patch 3 |
+| PLC Device | CODESYS Control Win V3 x64 |
+| Programming Language | Structured Text (ST) |
+| Interface | CODESYS Visualization |
+| Project Type | PLC Simulation |
+| Hardware | No physical hardware required |
+
+---
+
+## Project Features
+
+### 1. Temperature Control
+
+- Allows operators to manually enter the desired oven temperature.
+- Displays the current temperature using an HMI gauge.
+- Simulates heating until the desired temperature is reached.
+- Simulates cooling when the heating process stops.
+
+### 2. Power Control
+
+- Provides an ON/OFF rocker switch for controlling the oven.
+- Includes an LED indicator displaying power status.
+
+### 3. Status Indicators
+
+The HMI includes LED indicators for:
+
+- Oven power status
+- Temperature ramping up
+- Target temperature reached
+- Door lock status
+- Safe-to-open status
+
+### 4. Safety System
+
+- Monitors the simulated oven temperature.
+- Activates an alarm when the temperature exceeds the configured O-ring safety limit.
+- Triggers an automatic shutdown when the temperature reaches the critical safety threshold.
+- Provides door-locking and safe-to-open indications based on oven conditions.
+
+### 5. Alarm Management
+
+- Includes an alarm table for displaying warnings.
+- Supports alarm acknowledgment.
+- Monitors excessive temperature conditions.
+- Provides an automatic shutdown trip for critical overheating.
+
+---
+
+## Project Structure
+
+The project follows a modular PLC programming approach using function blocks, global variables, and visualization components.
+
+### CODESYS Device Structure
+
+![CODESYS Project Structure](screenshots/Screenshot%202025-11-15%20112314%281%29.png)
+
+The project contains:
+
+- **PLC_PRG** — Main PLC program.
+- **GVL_Oven** — Global variables for the HMI, temperature, and safety status.
+- **FB_ProcessControl** — Manages the oven operating sequence.
+- **FB_SafetyLogic** — Handles alarms, shutdown protection, and safety conditions.
+- **FB_TemperatureSimulation** — Simulates oven heating and cooling.
+- **Alarm Configuration** — Manages alarm conditions.
+- **Visu_Oven** — Human Machine Interface for monitoring and control.
+- **Task Configuration** — Organizes PLC execution tasks.
+
+---
+
+## HMI Design
+
+The Human Machine Interface provides a visual representation of the industrial oven's operating conditions.
+
+![Industrial Oven HMI](screenshots/Screenshot%202025-11-15%20112446.png)
+
+### HMI Components
+
+| Component | Function |
+|-----------|----------|
+| Temperature Gauge | Displays the current simulated oven temperature |
+| Temperature Spinner | Allows the operator to adjust the temperature setpoint |
+| Rocker Switch | Controls oven power |
+| Power LED | Indicates oven power status |
+| Ramp Up LED | Indicates temperature is increasing |
+| At Temp LED | Indicates the target temperature has been reached |
+| Door Lock Indicator | Shows the door lock status |
+| Safe to Open LED | Indicates when the oven has cooled sufficiently |
+| Alarm Table | Displays temperature warnings and alarms |
+| Alarm Acknowledgment Button | Allows the operator to acknowledge alarms |
+
+---
+
+## PLC Programming
+
+The PLC control system is developed using Structured Text (ST).
+
+### 1. Main Program — PLC_PRG
+
+![PLC Main Program](screenshots/Screenshot%202025-11-15%20112741.png)
+
+The main PLC program initializes and executes three function blocks:
+
+- `FB_SafetyLogic`
+- `FB_ProcessControl`
+- `FB_TemperatureSimulation`
+
+These function blocks are executed during the PLC scan cycle to manage the simulated industrial oven.
+
+### 2. Global Variable List — GVL_Oven
+
+![Global Variables](screenshots/Screenshot%202025-11-15%20112818.png)
+
+The Global Variable List stores the shared variables used by the control system, including:
+
+- Oven power switch
+- Temperature setpoint
+- Current oven temperature
+- O-ring temperature limit
+- Heating command
+- LED indicators
+- Alarm conditions
+- Door lock output
+- Safety shutdown status
+
+The variables allow the PLC program, function blocks, and HMI to communicate.
+
+### 3. Process Control — FB_ProcessControl
+
+![Process Control Function Block](screenshots/Screenshot%202025-11-15%20112851.png)
+
+This function block manages the oven operating sequence using a state machine.
+
+The operating states include:
+
+- **Off** — Oven is switched off.
+- **Idle** — Oven is waiting for operation.
+- **Ramping** — Oven temperature increases toward the target.
+- **At Temperature** — Oven has reached the desired temperature and performs the timed drying process.
+- **Cooling** — Heating is disabled and the oven temperature decreases.
+
+The function block also controls heating commands and status indicators.
+
+### 4. Safety Logic — FB_SafetyLogic
+
+![Safety Logic Function Block](screenshots/Screenshot%202025-11-15%20112908.png)
+
+This function block monitors temperature conditions to protect the oven and processed fixtures.
+
+The safety functions include:
+
+- Monitoring the O-ring temperature limit.
+- Activating an alarm when the temperature exceeds the limit.
+- Handling alarm acknowledgment.
+- Triggering an automatic shutdown at the critical threshold.
+- Controlling safety-related indicators and door status.
+
+The configured example O-ring safety limit is **150°F**.
+
+The critical shutdown threshold is **160°F**, which is 10°F above the configured O-ring limit.
+
+### 5. Temperature Simulation — FB_TemperatureSimulation
+
+![Temperature Simulation Function Block](screenshots/Screenshot%202025-11-15%20112921.png)
+
+This function block simulates oven temperature changes without requiring a physical temperature sensor or heating element.
+
+The simulation uses the following parameters:
+
+| Parameter | Value |
+|-----------|-------|
+| Heating Rate | 0.2°F per execution cycle |
+| Cooling Rate | 0.1°F per execution cycle |
+| Ambient Temperature | 75°F |
+
+**Heating:** When the heating command is active, the simulated temperature gradually increases.
+
+**Cooling:** When the heating command is inactive, the simulated temperature gradually decreases toward ambient temperature.
+
+A lower temperature boundary prevents the simulated oven temperature from decreasing below the configured ambient temperature.
+
+These are simulation parameters rather than calibrated real-world heating and cooling rates.
+
+---
+
+## System Operation
+
+The simulated oven follows this general operating sequence:
+
+1. The operator enters the desired temperature using the HMI.
+2. The operator activates the oven using the power switch.
+3. The system enables the simulated oven operation and applies door safety logic.
+4. The temperature simulation increases the displayed oven temperature.
+5. The ramp-up indicator shows that the oven is heating.
+6. Once the target temperature is reached, the at-temperature indicator activates.
+7. The process controller manages the drying duration.
+8. The oven enters the cooling stage after the timed process.
+9. The safe-to-open indicator is activated when the corresponding safety conditions are satisfied.
+10. If an overtemperature condition occurs, the alarm system responds and the critical shutdown logic protects the simulated oven.
+
+---
+
+## How to Run the Project
+
+### Requirements
+
+- CODESYS V3.5 SP21 Patch 3
+- Windows operating system
+- Compatible CODESYS simulation environment or Control Win runtime
+
+### Instructions
+
+1. Download `Industrial_Oven.project` from this repository.
+2. Open CODESYS V3.5 SP21 Patch 3.
+3. Select **File → Open Project**.
+4. Locate and open the downloaded project.
+5. Verify the PLC device and project configuration.
+6. Select **Build → Build** and check for compilation errors.
+7. Enable simulation mode through **Online → Simulation**, or connect to a configured CODESYS Control Win runtime.
+8. Select **Online → Login**.
+9. Start the PLC application.
+10. Open the `Visu_Oven` visualization.
+11. Set the desired temperature and operate the simulated oven.
+
+---
+
+## Testing
+
+The application was tested as part of the BCA153 Industrial Oven final project.
+
+The documented testing focused on:
+
+- Operator temperature input
+- Temperature ramp-up indication
+- Target temperature indication
+- Oven power control
+- Alarm table warnings
+- Overtemperature monitoring
+- Safe-to-open and door lock indications
+
+The project documentation reports that the required HMI controls, warning indications, and simulated operating functions were demonstrated.
+
+---
+
+## Project Limitations
+
+- The project is designed for simulation only.
+- No physical heating element, temperature sensor, or PLC hardware is connected.
+- Temperature changes are generated through software.
+- Heating and cooling rates do not represent a calibrated industrial oven.
+- Real-world industrial operation would require independent, validated safety systems.
+
+---
+
+## Academic Information
+
+**Project Title:** Industrial Oven Control System
+
+**Course:** BCA153 — Computer Applications in the Industry
+
+**Institution:** Mindanao State University – Iligan Institute of Technology (MSU-IIT)
+
+**College:** College of Computer Studies
+
+**Department:** Department of Computer Applications
+
+### Project Developers
+
+- Binyusoph P. Sansarona
+- KJ C. Villanueva
+
+---
+
+## Conclusion
+
+The Industrial Oven Control System demonstrates how PLC programming and HMI visualization can be integrated to simulate an automated industrial process.
+
+Using CODESYS V3.5 SP21 Patch 3, the project combines structured programming, temperature simulation, process control, alarm monitoring, and safety logic into a single industrial automation application.
+
+The project serves as an educational example of PLC-based control systems and industrial process simulation.
+
+---
+
+**Developed using CODESYS V3.5 SP21 Patch 3 | Industrial Automation Simulation**
